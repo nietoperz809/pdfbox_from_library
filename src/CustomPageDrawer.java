@@ -16,19 +16,14 @@
  */
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.rendering.PageDrawerParameters;
-import org.apache.pdfbox.util.Matrix;
-import org.apache.pdfbox.util.Vector;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +41,7 @@ public class CustomPageDrawer
 {
     public static void main(String[] args) throws IOException
     {
-        File file = new File("C:\\Users\\Administrator\\Desktop\\pdf\\fxtbook.pdf");
+        File file = new File("C:\\Users\\Administrator\\Desktop\\pdf\\FAT12Description.pdf");
         
         try (PDDocument doc = PDDocument.load(file))
         {
@@ -105,35 +100,35 @@ public class CustomPageDrawer
         /**
          * Glyph bounding boxes.
          */
-        @Override
-        protected void showGlyph(Matrix textRenderingMatrix, PDFont font, int code, String unicode,
-                                 Vector displacement) throws IOException
-        {
-            // draw glyph
-            super.showGlyph(textRenderingMatrix, font, code, unicode, displacement);
-            
-            // bbox in EM -> user units
-            Shape bbox = new Rectangle2D.Float(0, 0, font.getWidth(code) / 1000, 1);
-            AffineTransform at = textRenderingMatrix.createAffineTransform();
-            bbox = at.createTransformedShape(bbox);
-            
-            // save
-            Graphics2D graphics = getGraphics();
-            Color color = graphics.getColor();
-            Stroke stroke = graphics.getStroke();
-            Shape clip = graphics.getClip();
-
-            // draw
-            graphics.setClip(graphics.getDeviceConfiguration().getBounds());
-            graphics.setColor(Color.RED);
-            graphics.setStroke(new BasicStroke(.5f));
-            graphics.draw(bbox);
-
-            // restore
-            graphics.setStroke(stroke);
-            graphics.setColor(color);
-            graphics.setClip(clip);
-        }
+//        @Override
+//        protected void showGlyph(Matrix textRenderingMatrix, PDFont font, int code, String unicode,
+//                                 Vector displacement) throws IOException
+//        {
+//            // draw glyph
+//            super.showGlyph(textRenderingMatrix, font, code, unicode, displacement);
+//
+////            // bbox in EM -> user units
+////            Shape bbox = new Rectangle2D.Float(0, 0, font.getWidth(code) / 1000, 1);
+////            AffineTransform at = textRenderingMatrix.createAffineTransform();
+////            bbox = at.createTransformedShape(bbox);
+////
+////            // save
+////            Graphics2D graphics = getGraphics();
+////            Color color = graphics.getColor();
+////            Stroke stroke = graphics.getStroke();
+////            Shape clip = graphics.getClip();
+////
+////            // draw
+////            graphics.setClip(graphics.getDeviceConfiguration().getBounds());
+////            graphics.setColor(Color.RED);
+////            graphics.setStroke(new BasicStroke(.5f));
+////            graphics.draw(bbox);
+////
+////            // restore
+////            graphics.setStroke(stroke);
+////            graphics.setColor(color);
+////            graphics.setClip(clip);
+//        }
 
         /**
          * Filled path bounding boxes.
